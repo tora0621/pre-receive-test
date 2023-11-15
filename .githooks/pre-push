@@ -1,24 +1,21 @@
 #!/bin/bash
 
-# これらのブランチへのプッシュを禁止する
-prohibited_branches="(master|develop|main)"
+# テストブランチ
+test_branch="test"
 
 while read local_ref local_sha remote_ref remote_sha
 do
-    # プッシュ先ブランチ名が正規表現でマッチしたら...
-    if [[ "$remote_ref" =~ ^.*/$prohibited_branches$ ]]; then
+    # プッシュ先ブランチがテストブランチからの派生である場合...
+    if [[ "$local_ref" =~ ^refs/heads/$test_branch/ ]]; then
         cat <<-EOS
         --------------------------------------------------
 
-        DO NOT PUSH TO $remote_ref DIRECTLY!
+        DO NOT PUSH NEW BRANCHES DERIVED FROM $test_branch!
 
         --------------------------------------------------
-        EOS
-
-        # 異常終了（プッシュはされない）
+EOS
         exit 1
     fi
 done
 
-# それ以外のブランチはプッシュする
 exit 0
