@@ -1,0 +1,9 @@
+#!/bin/bash
+
+while read -r oldrev newrev refname
+do
+  if [[ $refname == "refs/heads/main" ]]; then
+    echo "エラー: main ブランチへの直接のプッシュは許可されていません。"
+    exit 1
+  fi
+done
