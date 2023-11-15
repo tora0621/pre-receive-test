@@ -1,9 +1,24 @@
 #!/bin/bash
 
-while read -r oldrev newrev refname
+# これらのブランチへのプッシュを禁止する
+prohibited_branches="(master|develop|main)"
+
+while read local_ref local_sha remote_ref remote_sha
 do
-  if [[ $refname == "refs/heads/test" ]]; then
-    echo "エラー: main ブランチへの直接のプッシュは許可されていません。"
-    exit 1
-  fi
+    # プッシュ先ブランチ名が正規表現でマッチしたら...
+    if [[ "$remote_ref" =~ ^.*/$prohibited_branches$ ]]; then
+        cat <<-EOS
+        --------------------------------------------------
+
+        DO NOT PUSH TO $remote_ref DIRECTLY!
+
+        --------------------------------------------------
+        EOS
+
+        # 異常終了（プッシュはされない）
+        exit 1
+    fi
 done
+
+# それ以外のブランチはプッシュする
+exit 0
