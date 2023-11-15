@@ -3,9 +3,10 @@
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [ "$current_branch" == "test" ]; then
-    git diff --cached --name-only --diff-filter=ACM | grep -q "^path/to/test-specific-files/"
+    # このブランチから派生した変更があるか確認
+    git diff --name-only origin/test...HEAD | grep -qE '^'
     if [ $? -eq 0 ]; then
-        echo "testブランチからのコミットは特定のファイルの変更を含むため、許可されません。" >&2
+        echo "testブランチからのコミットは許可されません。" >&2
         exit 1
     fi
 fi
