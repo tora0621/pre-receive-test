@@ -5,8 +5,16 @@ current_branch=$(git rev-parse --abbrev-ref HEAD)
 
 # test ブランチが含まれているか確認
 if git branch --contains $(git rev-parse --short @) | grep -q 'test'; then
-    echo "test ブランチが含まれているため、コミットは拒否されます。" >&2
-    exit 1
+    # main ブランチも含まれているか確認
+    if git branch --contains $(git rev-parse --short @) | grep -q 'main'; then
+        # test と main が含まれている場合は許可
+        echo "testブランチとmainブランチあり。"
+        exit 0
+    else
+        # test のみ含まれている場合は拒否
+        echo "test ブランチのみが含まれています。コミットは拒否されます。" >&2
+        exit 1
+    fi
 fi
 
 exit 0
