@@ -1,20 +1,15 @@
 #!/bin/bash
 
-# 現在のブランチを取得
+# 現在のブランチ名を取得
 current_branch=$(git rev-parse --abbrev-ref HEAD)
+test_branch="test"
 
-# test ブランチが含まれているか確認
-if git branch --contains $(git rev-parse --short @) | grep -q 'test'; then
-    # main ブランチも含まれているか確認
-    if git branch --contains $(git rev-parse --short @) | grep -q 'main'; then
-        # test と main が含まれている場合は許可
-        echo "testブランチとmainブランチあり。"
-        exit 0
-    else
-        # test のみ含まれている場合は拒否
-        echo "test ブランチのみが含まれています。コミットは拒否されます。" >&2
-        exit 1
-    fi
+# current_branchがtestブランチから派生しているか確認
+if git merge-base --is-ancestor "$test_branch" "$current_branch"; then
+    echo "Error: コミットをtestブランチからの派生ブランチには許可されていません。"
+    echo "詳細はチームのポリシーに従ってください。"
+    exit 1
 fi
 
+# コミットが問題ない場合は続行
 exit 0
