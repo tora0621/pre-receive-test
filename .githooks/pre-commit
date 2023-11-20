@@ -4,12 +4,14 @@
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 test_branch="test"
 
-# current_branchがtestブランチから派生しているか確認
+if [ "$current_branch" = "$test_branch" ]; then
+    exit 0
+fi
+
 if git merge-base --is-ancestor "$test_branch" "$current_branch"; then
     echo "Error: コミットをtestブランチからの派生ブランチには許可されていません。"
     echo "詳細はチームのポリシーに従ってください。"
     exit 1
 fi
 
-# コミットが問題ない場合は続行
 exit 0
