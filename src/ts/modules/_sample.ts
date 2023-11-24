@@ -21,4 +21,5 @@ function sample1() {
  */
 function sample2() {
   console.info('sample2');
+  console.log('test');
 }

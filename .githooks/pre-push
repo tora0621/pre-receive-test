@@ -1,0 +1,15 @@
+#!/bin/bash
+
+while read local_ref local_sha remote_ref remote_sha
+do
+    # 変更されたファイルのリストを取得
+    changed_files=$(git diff --name-only $remote_sha $local_sha)
+
+    # 変更されたファイルの中に/src以下のファイルが含まれているかをチェック
+    if echo "$changed_files" | grep "^src/" >/dev/null; then
+        echo "srcディレクトリ以下のファイルが変更されました。npm run prodを実行します。"
+        npm run prod # npm run prodの実行（適切なコマンドに置き換えてください）
+    else
+        echo "srcディレクトリ以下のファイルは変更されていません。npm run prodは実行されません。"
+    fi
+done
