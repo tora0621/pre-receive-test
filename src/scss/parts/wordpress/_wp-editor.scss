@@ -1,0 +1,96 @@
+@use '/src/scss/global/setting/' as var;
+@use '/src/scss/global/mixin/' as *;
+
+/**
+ * ビジュアルエディタ共通スタイル
+ * TinyMCEのbodyに付与される為、記事表示箇所に.wp-editorを付与することで記事編集画面と同じスタイルを適用可能
+ */
+.wp-editor {
+  > p + p {
+    margin-top: 1em;
+  }
+
+  > blockquote {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    margin-left: 1em;
+    color: #666;
+    border-left: 0.5rem solid #ccc;
+    border-radius: 0.5rem 0 0 0.5rem;
+  }
+
+  ul {
+    margin: 0.5em 0;
+
+    li {
+      position: relative;
+      text-indent: -1.1em;
+      margin-left: 1.1em;
+
+      &::before {
+        content: '\02022';
+        font-size: inherit;
+        color: #666;
+        width: 1em;
+        height: 1em;
+        line-height: 1;
+        margin: 0 0.27em;
+      }
+    }
+  }
+
+  ol {
+    margin: 0.5em 0;
+    list-style-type: decimal;
+    margin-left: 1.3em;
+  }
+
+  > table {
+    margin: 0.5em 0;
+
+    @include sumaho {
+      width: 100% !important;
+    }
+
+    @include thtd {
+      padding: 0.5em;
+      border: 1px solid #999;
+    }
+
+    @include td {
+      word-break: break-all;
+    }
+  }
+
+  img {
+    @include sumaho {
+      width: 100%;
+      height: auto;
+    }
+
+    &.alignleft {
+      display: block;
+      float: none;
+      margin-right: auto;
+      margin-left: 0;
+    }
+
+    &.alignright {
+      display: block;
+      float: none;
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    &.aligncenter {
+      display: block;
+      float: none;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  strong {
+    font-weight: bold;
+  }
+}

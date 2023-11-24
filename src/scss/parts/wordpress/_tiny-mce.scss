@@ -1,0 +1,17 @@
+@use '/src/scss/global/setting/' as var;
+@use '/src/scss/global/mixin/' as *;
+
+/**
+ * WordPressのビジュアルエディタTinyMCEのbodyのID
+ */
+#tinymce {
+  min-height: auto !important;
+  font-family: 'Noto Sans JP', sans-serif;
+  max-width: 124rem; // コンテンツ幅に合わせる
+  margin: auto;
+  padding: 3rem 0 !important;
+
+  @include sumaho {
+    padding: 3rem 1rem;
+  }
+}

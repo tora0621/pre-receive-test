@@ -1,0 +1,43 @@
+@use '/src/scss/global/setting/' as var;
+@use '/src/scss/global/mixin/' as *;
+
+/**
+ * ビジュアルエディタ内の見出しスタイルのサンプル
+ */
+@mixin wp-ttl() {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.2rem;
+  line-height: 1.2;
+  display: flex;
+
+  @include sumaho {
+    font-size: 1.8rem;
+  }
+}
+
+.wp-ttl {
+  &1 {
+    @include wp-ttl;
+  }
+
+  &2 {
+    @include wp-ttl;
+    border-left: 5px solid #333;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      width: 3px;
+      height: 1.2em;
+      background-color: #aaa;
+      margin: 0 0.5em 0 3px;
+    }
+  }
+
+  &3 {
+    @include wp-ttl;
+    border-bottom: 3px dotted #666;
+    padding-bottom: 0.4rem;
+  }
+}
